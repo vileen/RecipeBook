@@ -1,0 +1,45 @@
+<nav class="navbar navbar-light navbar-toggleable-md bg-faded">
+  <button
+    class="navbar-toggler hidden-sm-up"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarResponsive"
+    aria-controls="navbarResponsive"
+    aria-expanded="false"
+    aria-label="Toggle navigation"></button>
+
+  <div class="navbar-header">
+    <a routerLink="/" class="navbar-brand">Recipe Book</a>
+  </div>
+
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav mr-auto">
+      <li><a class="nav-item nav-link" routerLink="/recipes" routerLinkActive="active">Recipes</a></li>
+      <li><a class="nav-item nav-link" routerLink="/shopping-list" routerLinkActive="active">Shopping List</a></li>
+    </ul>
+    <ul class="navbar-nav">
+      <!-- ng-template to wrap elements, because div may destroy the layout-->
+      <ng-template [ngIf]="!authService.isAuthenticated()">
+        <li><a routerLink="/signup" class="nav-item nav-link">Register</a></li>
+        <li><a routerLink="/signin" class="nav-item nav-link">Login</a></li>
+      </ng-template>
+      <li>
+        <a
+          (click)="onLogout()"
+          class="nav-item nav-link"
+          *ngIf="authService.isAuthenticated()"
+        >
+          Logout
+        </a>
+      </li>
+      <li class="dropdown" appDropdown *ngIf="authService.isAuthenticated()">
+        <a class="nav-link dropdown-toggle" role="button">Manage</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="onSaveData()">Save Data</a></li>
+          <li><a class="dropdown-item" (click)="onGetData()">Fetch Data</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!-- TODO Add hamburger menu -->
